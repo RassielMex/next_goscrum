@@ -1,8 +1,17 @@
-export default function CreateTaskForm() {
+"use client";
+import { TaskCreateAction } from "@/app/lib/task-action";
+import { useActionState } from "react";
+
+export default function TaskCreateForm() {
+  const [actionResult, formAction, isPending] = useActionState(
+    TaskCreateAction,
+    undefined
+  );
+
   return (
     <section className="min-w-96 mt-4 mx-2 md:mt-10 p-4 shadow-md bg-white rounded-md">
       <h1 className="font-semibold text-xl mb-4">Nueva Tarea</h1>
-      <form action="" className="flex flex-col gap-y-3">
+      <form action={formAction} className="flex flex-col gap-y-3">
         <fieldset>
           <input
             id="title"
@@ -10,9 +19,13 @@ export default function CreateTaskForm() {
             placeholder="Título"
             className="w-full p-2 border-2 rounded-md focus:outline-teal-200"
           />
-          <span className="bg-pink-500 text-white px-1 text-sm">
-            Error de campo
-          </span>
+          {actionResult?.errors?.title?.map((error, index) => {
+            return (
+              <span key={error + index} className="block text-sm text-red-500">
+                {error}
+              </span>
+            );
+          })}
         </fieldset>
 
         <fieldset>
@@ -26,9 +39,13 @@ export default function CreateTaskForm() {
             <option value="inProgress">En Progreso</option>
             <option value="finished">Terminado</option>
           </select>
-          <span className="bg-pink-500 text-white px-1 text-sm">
-            Error de campo
-          </span>
+          {actionResult?.errors?.status?.map((error, index) => {
+            return (
+              <span key={error + index} className="block text-sm text-red-500">
+                {error}
+              </span>
+            );
+          })}
         </fieldset>
 
         <fieldset>
@@ -42,15 +59,19 @@ export default function CreateTaskForm() {
             <option value="medium">Media</option>
             <option value="high">Alta</option>
           </select>
-          <span className="bg-pink-500 text-white px-1 text-sm">
-            Error de campo
-          </span>
+          {actionResult?.errors?.priority?.map((error, index) => {
+            return (
+              <span key={error + index} className="block text-sm text-red-500">
+                {error}
+              </span>
+            );
+          })}
         </fieldset>
 
         <fieldset>
           <select
-            id="owner"
-            name="owner"
+            id="user_id"
+            name="user_id"
             className="w-full p-2 border-2 rounded-md bg-white focus:outline-teal-200"
           >
             <option value="">Asignar..</option>
@@ -58,9 +79,13 @@ export default function CreateTaskForm() {
             <option value="2">Member 2</option>
             <option value="3">Member 3</option>
           </select>
-          <span className="bg-pink-500 text-white px-1 text-sm">
-            Error de campo
-          </span>
+          {actionResult?.errors?.user_id?.map((error, index) => {
+            return (
+              <span key={error + index} className="block text-sm text-red-500">
+                {error}
+              </span>
+            );
+          })}
         </fieldset>
 
         <fieldset>
@@ -70,12 +95,19 @@ export default function CreateTaskForm() {
             placeholder="Escribe una descripcion de tu tarea"
             className="w-full p-2 border-2 rounded-md focus:outline-teal-200 max-h-16 resize-none"
           />
-          <span className="bg-pink-500 text-white px-1 text-sm">
-            Error de campo
-          </span>
+          {actionResult?.errors?.description?.map((error, index) => {
+            return (
+              <span key={error + index} className="block text-sm text-red-500">
+                {error}
+              </span>
+            );
+          })}
         </fieldset>
 
-        <button className="w-full py-1 border-2 font-medium  border-teal-400 rounded-xl hover:bg-teal-400 hover:text-white">
+        <button
+          aria-disabled={isPending}
+          className="w-full py-1 border-2 font-medium  border-teal-400 rounded-xl hover:bg-teal-400 hover:text-white"
+        >
           Crear
         </button>
       </form>

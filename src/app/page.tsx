@@ -1,7 +1,7 @@
 //import Image from "next/image";
 
 import Navbar from "./components/shared/navbar";
-import CreateTaskForm from "./components/tasks/create-task-form";
+import TaskCreateForm from "./components/tasks/task-create-form";
 import TasksContainer from "./components/tasks/tasks-container";
 
 export default function Home() {
@@ -9,7 +9,7 @@ export default function Home() {
     <div className="">
       <Navbar />
       <div className="container mx-auto md:flex">
-        <CreateTaskForm />
+        <TaskCreateForm />
         <TasksContainer />
       </div>
     </div>
