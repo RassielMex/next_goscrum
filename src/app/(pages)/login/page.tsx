@@ -8,7 +8,7 @@ export default function LoginPage() {
         <form>
           <div>
             <label htmlFor="user" className="block mb-1">
-              Usuario:
+              Email:
             </label>
             <input
               id="user"
