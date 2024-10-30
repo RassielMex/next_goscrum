@@ -102,8 +102,8 @@ export default function RegisterPage() {
             Login
           </button>
         </form>
-        <Link href="/register">
-          <p className="text-teal-500 text-center mt-2">Registrarse</p>
+        <Link href="/login">
+          <p className="text-teal-500 text-center mt-2">Iniciar Sesión</p>
         </Link>
       </div>
     </div>
