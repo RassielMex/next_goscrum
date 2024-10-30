@@ -1,4 +1,4 @@
-import { UserCircleIcon } from "@heroicons/react/16/solid";
+import { FaUser } from "react-icons/fa";
 import clsx from "clsx";
 
 type Status = "new" | "inProgress" | "finished";
@@ -19,7 +19,7 @@ export default function TaskCard(task: Props) {
       <h4 className="text-lg font-medium">{task.title}</h4>
       <hr className="mb-2" />
       <div className="flex gap-x-1">
-        <UserCircleIcon className="w-4" />
+        <FaUser className="w-4" />
         <p className="italic">{task.owner}</p>
       </div>
       <TextLimiter text={task.description} />
