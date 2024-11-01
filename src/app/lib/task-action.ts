@@ -1,3 +1,4 @@
+"use server";
 import { TaskFormState } from "../models/definitions";
 import { TaskSchema } from "../models/task-schema";
 

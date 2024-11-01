@@ -13,7 +13,7 @@ type Props = {
 };
 
 export default function TaskCard(task: Props) {
-  console.log(task);
+  //console.log(task);
   return (
     <div className="bg-white p-2 rounded shadow min-w-28">
       <h4 className="text-lg font-medium">{task.title}</h4>

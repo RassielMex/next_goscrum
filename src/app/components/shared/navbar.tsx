@@ -1,4 +1,4 @@
-import React from "react";
+import { LogOutAction } from "@/app/lib/login-action";
 import { CiLogout } from "react-icons/ci";
 
 export default function Navbar() {
@@ -6,7 +6,11 @@ export default function Navbar() {
     <nav className="bg-stone-700 text-white h-12 px-4">
       <div className="container mx-auto h-full flex justify-between items-center">
         <p className="text-lg font-semibold">Go Scrum</p>
-        <CiLogout className="size-6" />
+        <form action={LogOutAction}>
+          <button type="submit">
+            <CiLogout className="size-6" />
+          </button>
+        </form>
       </div>
     </nav>
   );
