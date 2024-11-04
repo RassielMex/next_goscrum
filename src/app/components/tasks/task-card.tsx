@@ -1,18 +1,8 @@
 import { FaUser } from "react-icons/fa";
 import clsx from "clsx";
+import { Task, TaskPriority, TaskStatus } from "@/app/models/definitions";
 
-type Status = "new" | "inProgress" | "finished";
-type Priority = "low" | "medium" | "high";
-
-type Props = {
-  title: string;
-  status: Status;
-  priority: Priority;
-  owner: string;
-  description: string;
-};
-
-export default function TaskCard(task: Props) {
+export default function TaskCard({ task }: { task: Task }) {
   //console.log(task);
   return (
     <div className="bg-white p-2 rounded shadow min-w-28">
@@ -20,7 +10,7 @@ export default function TaskCard(task: Props) {
       <hr className="mb-2" />
       <div className="flex gap-x-1">
         <FaUser className="w-4" />
-        <p className="italic">{task.owner}</p>
+        <p className="italic">{task.user_id}</p>
       </div>
       <TextLimiter text={task.description} />
       <StatusBadge status={task.status} />
@@ -29,14 +19,14 @@ export default function TaskCard(task: Props) {
   );
 }
 
-function StatusBadge({ status }: { status: Status }) {
+function StatusBadge({ status }: { status: TaskStatus }) {
   let statusText;
 
   switch (status) {
     case "new":
       statusText = "Nuevo";
       break;
-    case "inProgress":
+    case "in_progress":
       statusText = "En Progreso";
       break;
     case "finished":
@@ -52,7 +42,7 @@ function StatusBadge({ status }: { status: Status }) {
       className={clsx(
         "px-2 py-1 mr-1 mb-1 text-white rounded-md text-sm",
         status === "new" && "bg-blue-500",
-        status === "inProgress" && "bg-green-500",
+        status === "in_progress" && "bg-green-500",
         status === "finished" && "bg-gray-600"
       )}
     >
@@ -61,7 +51,7 @@ function StatusBadge({ status }: { status: Status }) {
   );
 }
 
-function PriorityBadge({ priority }: { priority: Priority }) {
+function PriorityBadge({ priority }: { priority: TaskPriority }) {
   let priorityText;
 
   switch (priority) {

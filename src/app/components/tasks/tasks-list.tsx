@@ -1,45 +1,35 @@
+import { Task } from "@/app/models/definitions";
 import TaskCard from "./task-card";
 
-export default function TasksList() {
+export default function TasksList({ tasks }: { tasks: Task[] }) {
+  const newTasks = tasks.filter((task) => {
+    return task.status === "new";
+  });
+
+  const inProgressTasks = tasks.filter((task) => {
+    return task.status === "in_progress";
+  });
+
+  const finishedTasks = tasks.filter((task) => {
+    return task.status === "finished";
+  });
+
   return (
     <div className="flex gap-x-2">
       <div className="flex flex-col w-1/3 gap-y-2">
-        <TaskCard
-          title="Titulo 1"
-          owner="Usuario 1"
-          status="new"
-          priority="low"
-          description="Esta es una descripcion más larga
-        "
-        />
-        <TaskCard
-          title="Titulo 1"
-          owner="Usuario 1"
-          status="new"
-          priority="low"
-          description="Esta es una descripcion
-      "
-        />
+        {newTasks.map((task, index) => {
+          return <TaskCard key={task.title + index} task={task} />;
+        })}
       </div>
       <div className="flex flex-col w-1/3 gap-y-2">
-        <TaskCard
-          title="Titulo 1"
-          owner="Usuario 1"
-          status="new"
-          priority="low"
-          description="Esta es una descripcion
-        "
-        />
+        {inProgressTasks.map((task, index) => {
+          return <TaskCard key={task.title + index} task={task} />;
+        })}
       </div>
       <div className="flex flex-col w-1/3 gap-y-2">
-        <TaskCard
-          title="Titulo 1"
-          owner="Usuario 1"
-          status="new"
-          priority="low"
-          description="Esta es una descripcion
-        "
-        />
+        {finishedTasks.map((task, index) => {
+          return <TaskCard key={task.title + index} task={task} />;
+        })}
       </div>
     </div>
   );
