@@ -63,7 +63,13 @@ export async function registerUser(
       );
       const jsonGetTeamResp = (await getTeamResp.json()) as TeamfromDB;
       //console.log(jsonGetTeamResp);
-      userData = { ...user, teamId: jsonGetTeamResp.id };
+      userData = {
+        name: memberUser.name,
+        email: memberUser.email,
+        password: memberUser.password,
+        role: memberUser.role,
+        teamId: jsonGetTeamResp.id,
+      };
       //console.log(userData);
     }
 

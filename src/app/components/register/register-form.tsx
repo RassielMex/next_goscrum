@@ -82,13 +82,7 @@ export default function RegisterForm() {
       <div>
         <fieldset onChange={handleChange}>
           <div>
-            <input
-              id="leader"
-              name="role"
-              type="radio"
-              value={"leader"}
-              defaultChecked
-            />
+            <input id="leader" name="role" type="radio" value={"leader"} />
             <label htmlFor="team_leader">Soy team leader!</label>
           </div>
           <div>
