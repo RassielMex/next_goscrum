@@ -7,10 +7,10 @@ const RegisterSchema = z.object({
 });
 
 export const LeaderRegisterSchema = RegisterSchema.extend({
-  user_type: z.literal("leader"),
+  role: z.literal("leader"),
 });
 
 export const MemberRegisterSchema = RegisterSchema.extend({
-  user_type: z.literal("member"),
-  group_id: z.string().uuid(),
+  role: z.literal("member"),
+  teamIdentifier: z.string().uuid(),
 });

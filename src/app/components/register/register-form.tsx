@@ -24,13 +24,13 @@ export default function RegisterForm() {
           Usuario:
         </label>
         <input
-          id="user"
-          name="user"
+          id="name"
+          name="name"
           type="text"
           placeholder="usuario123"
           className="block p-2 border-2 rounded-md focus:outline-teal-200"
         />
-        {actionResult?.errors?.user?.map((error, index) => {
+        {actionResult?.errors?.name?.map((error, index) => {
           return (
             <span key={error + index} className="block text-sm text-red-500">
               {error}
@@ -84,7 +84,7 @@ export default function RegisterForm() {
           <div>
             <input
               id="leader"
-              name="user_type"
+              name="role"
               type="radio"
               value={"leader"}
               defaultChecked
@@ -94,7 +94,7 @@ export default function RegisterForm() {
           <div>
             <input
               id="member"
-              name="user_type"
+              name="role"
               type="radio"
               value={"member"}
               ref={memberRadioRef}
@@ -105,13 +105,13 @@ export default function RegisterForm() {
         {showInputId && (
           <>
             <input
-              id="group_id"
-              name="group_id"
+              id="teamIdentifier"
+              name="teamIdentifier"
               type="text"
               placeholder="1234-1234-1234-1234"
               className="block p-2 border-2 rounded-md focus:outline-teal-200"
             />
-            {actionResult?.errors?.group_id?.map((error, index) => {
+            {actionResult?.errors?.teamIdentifier?.map((error, index) => {
               return (
                 <span
                   key={error + index}
@@ -129,7 +129,7 @@ export default function RegisterForm() {
         aria-disabled={isPending}
         className="w-full py-1 mt-2 bg-teal-500 rounded-xl"
       >
-        Login
+        Register
       </button>
     </form>
   );
