@@ -30,7 +30,6 @@ export default function LoginForm() {
           );
         })}
       </div>
-
       <div>
         <label htmlFor="password" className="block mb-1">
           Password:
@@ -50,13 +49,17 @@ export default function LoginForm() {
           );
         })}
       </div>
-
       <button
         aria-disabled={isPending}
         className="w-full py-1 mt-2 bg-teal-500 rounded-xl"
       >
         Login
       </button>
+      {actionResult?.message && (
+        <span className="block text-sm text-red-500 text-center my-2">
+          {actionResult?.message}
+        </span>
+      )}
     </form>
   );
 }
