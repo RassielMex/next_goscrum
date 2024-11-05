@@ -4,10 +4,17 @@ import Navbar from "./components/shared/navbar";
 import TaskCreateForm from "./components/tasks/task-create-form";
 import TasksFilter from "./components/tasks/tasks-filter";
 import TasksList from "./components/tasks/tasks-list";
+import { Task } from "./models/definitions";
 
 export default async function Home() {
-  const tasksResponde = await fetch("");
-  const tasks = await tasksResponde.json();
+  let tasksResponse;
+  let tasks: Task[] = [];
+  try {
+    tasksResponse = await fetch("http://localhost:8080/api/tasks");
+    tasks = await tasksResponse.json();
+  } catch (error) {
+    console.log(error);
+  }
 
   return (
     <div className="">
