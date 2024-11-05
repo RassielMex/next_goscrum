@@ -1,4 +1,3 @@
-//import { User } from "next-auth";
 import {
   RegisterLeaderUser,
   RegisterMemberUser,
@@ -6,14 +5,26 @@ import {
   Task,
   Team,
   TeamfromDB,
+  UserCredentials,
 } from "../models/definitions";
 
 import { v4 as uuidv4 } from "uuid";
 
-export async function getUserFromDb(email: string, password: string) {
+export async function getUserFromDb(credentials: UserCredentials) {
   try {
-    console.log(password);
-    return { email };
+    const getUserResp = await fetch(
+      "http://localhost:8080/api/users/credentials",
+      {
+        method: "POST",
+        body: JSON.stringify(credentials),
+        headers: { "Content-Type": "application/json" },
+      }
+    );
+    const jsonResp = await getUserResp.json();
+    if (jsonResp.statusCode === 404) {
+      return null;
+    }
+    return jsonResp;
   } catch (error) {
     console.error("Failed to fetch user:", error);
     return null;

@@ -47,24 +47,6 @@ export interface Task {
   description: string;
 }
 
-declare module "next-auth" {
-  /**
-   * Returned by `auth`, `useSession`, `getSession` and received as a prop on the `SessionProvider` React Context
-   */
-  interface Session {
-    user: {
-      /** The user's postal address. */
-      role: UserRole;
-      /**
-       * By default, TypeScript merges new interface properties and overwrites existing ones.
-       * In this case, the default session user properties will be overwritten,
-       * with the new ones defined above. To keep the default session user properties,
-       * you need to add them back into the newly declared interface.
-       */
-    } & DefaultSession["user"];
-  }
-}
-
 export type UserRole = "leader" | "member";
 
 export interface RegisterUser {
@@ -86,3 +68,34 @@ export interface TeamfromDB {
   identifier: string;
 }
 export type Team = Omit<TeamfromDB, "id">;
+
+declare module "next-auth" {
+  interface User {
+    role: UserRole;
+  }
+
+  interface Session {
+    user: {
+      role: UserRole;
+    } & DefaultSession["user"];
+  }
+}
+
+declare module "@auth/core" {
+  /** Returned by the `jwt` callback and `auth`, when using JWT sessions */
+  interface JWT {
+    /** OpenID ID Token */
+    role: UserRole;
+  }
+}
+
+export interface UserCredentials {
+  email: string;
+  password: string;
+}
+
+export interface UserFromDB {
+  email: string;
+  name: string;
+  role: string;
+}

@@ -3,13 +3,14 @@ import { AuthError } from "next-auth";
 import { LoginFormState } from "../models/definitions";
 import { LoginSchema } from "../models/login-schema";
 import { signIn, signOut } from "@/auth";
-import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import { isRedirectError } from "next/dist/client/components/redirect";
 
 export async function LoginAction(
   _prevState: LoginFormState,
   formData: FormData
 ): Promise<LoginFormState> {
+  let successLogin = false;
   try {
     const fieldEntries = Object.fromEntries(formData);
     const validatedFields = LoginSchema.safeParse(fieldEntries);
@@ -22,15 +23,20 @@ export async function LoginAction(
 
     //Post Login data
   } catch (error) {
-    console.log(error);
-    revalidatePath("/login");
+    //console.log(error);
+    //revalidatePath("/login");
     if (error instanceof AuthError) {
       // Return `null` to indicate that the credentials are invalid
       return { message: "Invalid Credentials" };
     }
+    if (isRedirectError(error)) {
+      successLogin = true;
+    }
     return { message: "Something went wrong in our side" };
   } finally {
-    redirect("/");
+    if (successLogin) {
+      redirect("/");
+    }
   }
 }
 
