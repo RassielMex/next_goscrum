@@ -10,7 +10,7 @@ export default function TaskCard({ task }: { task: Task }) {
       <hr className="mb-2" />
       <div className="flex gap-x-1">
         <FaUser className="w-4" />
-        <p className="italic">{task.user_id}</p>
+        <p className="italic">{task.userId}</p>
       </div>
       <TextLimiter text={task.description} />
       <StatusBadge status={task.status} />
@@ -42,7 +42,7 @@ function StatusBadge({ status }: { status: TaskStatus }) {
       className={clsx(
         "px-2 py-1 mr-1 mb-1 text-white rounded-md text-sm",
         status === "new" && "bg-blue-500",
-        status === "in_progress" && "bg-green-500",
+        status === "in_progress" && "bg-green-500 text-xs lg:text-sm  ",
         status === "finished" && "bg-gray-600"
       )}
     >

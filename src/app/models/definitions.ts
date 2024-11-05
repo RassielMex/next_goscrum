@@ -28,7 +28,7 @@ export type TaskFormState =
         title?: string[];
         status?: string[];
         priority?: string[];
-        user_id?: string[];
+        userId?: string[];
         description?: string[];
       };
       message?: string;
@@ -76,7 +76,9 @@ export interface UserCredentials {
 }
 
 export interface UserFromDB {
+  id: number;
   email: string;
   name: string;
   role: string;
+  teamId: number;
 }

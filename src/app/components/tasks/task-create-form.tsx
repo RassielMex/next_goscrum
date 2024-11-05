@@ -75,20 +75,20 @@ export default function TaskCreateForm({
 
         <fieldset>
           <select
-            id="user_id"
-            name="user_id"
+            id="userId"
+            name="userId"
             className="w-full p-2 border-2 rounded-md bg-white focus:outline-teal-200"
           >
             <option value="">Asignar..</option>;
             {users?.map((user, index) => {
               return (
-                <option key={index + user.name} value={user.name}>
+                <option key={index + user.name} value={user.id}>
                   {user.name}
                 </option>
               );
             })}
           </select>
-          {actionResult?.errors?.user_id?.map((error, index) => {
+          {actionResult?.errors?.userId?.map((error, index) => {
             return (
               <span key={error + index} className="block text-sm text-red-500">
                 {error}

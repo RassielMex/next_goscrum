@@ -34,12 +34,14 @@ export async function getUserFromDb(credentials: UserCredentials) {
 
 export async function createTask(task: Task) {
   try {
-    const response = await fetch("", {
+    const response = await fetch("http://localhost:8080/api/tasks", {
+      method: "POST",
       body: JSON.stringify(task),
+      headers: { "Content-Type": "application/json" },
     });
     const jsonResponse = await response.json();
-    console.log(jsonResponse);
-    if (jsonResponse.statusCode !== 201) {
+    //console.log(jsonResponse);
+    if (jsonResponse.statusCode === 400) {
       return null;
     }
     return jsonResponse;
@@ -112,7 +114,7 @@ export async function getTasks(teamId: string) {
     );
     const jsonResp = await tasksResponse.json();
     //console.log("Taks:", jsonResp);
-    if (jsonResp.statusCode !== 200) {
+    if (jsonResp.length <= 0) {
       return null;
     }
     return jsonResp as Task[];
@@ -132,7 +134,8 @@ export async function getUsers(teamId: string) {
       }
     );
     const jsonResp = await usersResponse.json();
-    if (jsonResp.statusCode !== 200) {
+    //console.log(jsonResp);
+    if (jsonResp.length <= 0) {
       return null;
     }
     return jsonResp as UserFromDB[];

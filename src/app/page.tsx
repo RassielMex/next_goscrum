@@ -6,14 +6,17 @@ import TaskCreateForm from "./components/tasks/task-create-form";
 import TasksFilter from "./components/tasks/tasks-filter";
 import TasksList from "./components/tasks/tasks-list";
 import { getTasks, getUsers } from "./lib/data";
+
 //import { Task } from "./models/definitions";
 
 export default async function Home() {
   const session = await auth();
   const user = session?.user;
-  console.log(user?.teamId);
-  const tasks = await getTasks("");
-  const users = await getUsers("");
+  const teamId = user?.teamId.toString() || "";
+
+  const tasks = await getTasks(teamId);
+  const users = await getUsers(teamId);
+
   return (
     <div className="">
       <Navbar />
