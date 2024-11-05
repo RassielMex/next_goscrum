@@ -1,8 +1,13 @@
 "use client";
 import { TaskCreateAction } from "@/app/lib/task-action";
+import { UserFromDB } from "@/app/models/definitions";
 import { useActionState } from "react";
 
-export default function TaskCreateForm() {
+export default function TaskCreateForm({
+  users,
+}: {
+  users: UserFromDB[] | null;
+}) {
   const [actionResult, formAction, isPending] = useActionState(
     TaskCreateAction,
     undefined
@@ -36,7 +41,7 @@ export default function TaskCreateForm() {
           >
             <option value="">Estado</option>
             <option value="new">Nuevo</option>
-            <option value="inProgress">En Progreso</option>
+            <option value="in_progress">En Progreso</option>
             <option value="finished">Terminado</option>
           </select>
           {actionResult?.errors?.status?.map((error, index) => {
@@ -74,10 +79,14 @@ export default function TaskCreateForm() {
             name="user_id"
             className="w-full p-2 border-2 rounded-md bg-white focus:outline-teal-200"
           >
-            <option value="">Asignar..</option>
-            <option value="1">Member 1</option>
-            <option value="2">Member 2</option>
-            <option value="3">Member 3</option>
+            <option value="">Asignar..</option>;
+            {users?.map((user, index) => {
+              return (
+                <option key={index + user.name} value={user.name}>
+                  {user.name}
+                </option>
+              );
+            })}
           </select>
           {actionResult?.errors?.user_id?.map((error, index) => {
             return (

@@ -6,6 +6,7 @@ import {
   Team,
   TeamfromDB,
   UserCredentials,
+  UserFromDB,
 } from "../models/definitions";
 
 import { v4 as uuidv4 } from "uuid";
@@ -31,14 +32,17 @@ export async function getUserFromDb(credentials: UserCredentials) {
   }
 }
 
-export async function postTask(task: Task) {
+export async function createTask(task: Task) {
   try {
     const response = await fetch("", {
       body: JSON.stringify(task),
     });
-    const jsonResponde = await response.json();
-    console.log(jsonResponde);
-    return jsonResponde;
+    const jsonResponse = await response.json();
+    console.log(jsonResponse);
+    if (jsonResponse.statusCode !== 201) {
+      return null;
+    }
+    return jsonResponse;
   } catch (error) {
     console.log(error);
   }
@@ -94,5 +98,46 @@ export async function registerUser(
     return jsonResp;
   } catch (error) {
     console.log(error);
+  }
+}
+
+export async function getTasks(teamId: string) {
+  try {
+    const tasksResponse = await fetch(
+      `http://localhost:8080/api/tasks/?teamId=${teamId}`,
+      {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      }
+    );
+    const jsonResp = await tasksResponse.json();
+    //console.log("Taks:", jsonResp);
+    if (jsonResp.statusCode !== 200) {
+      return null;
+    }
+    return jsonResp as Task[];
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+}
+
+export async function getUsers(teamId: string) {
+  try {
+    const usersResponse = await fetch(
+      `http://localhost:8080/api/users/?teamId=${teamId}`,
+      {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      }
+    );
+    const jsonResp = await usersResponse.json();
+    if (jsonResp.statusCode !== 200) {
+      return null;
+    }
+    return jsonResp as UserFromDB[];
+  } catch (error) {
+    console.log(error);
+    return null;
   }
 }

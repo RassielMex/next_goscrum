@@ -43,7 +43,7 @@ export interface Task {
   title: string;
   status: TaskStatus;
   priority: TaskPriority;
-  user_id: string;
+  userId: number;
   description: string;
 }
 
