@@ -10,6 +10,8 @@ import { getTasks, getUsers } from "./lib/data";
 
 export default async function Home() {
   const session = await auth();
+  const user = session?.user;
+  console.log(user?.teamId);
   const tasks = await getTasks("");
   const users = await getUsers("");
   return (

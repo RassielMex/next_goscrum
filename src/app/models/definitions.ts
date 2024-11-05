@@ -1,5 +1,4 @@
-import { DefaultSession } from "next-auth";
-
+//FORMS
 export type RegisterFormState =
   | {
       errors?: {
@@ -36,6 +35,8 @@ export type TaskFormState =
     }
   | undefined;
 
+//DATABASE
+
 export type TaskStatus = "new" | "in_progress" | "finished";
 export type TaskPriority = "low" | "medium" | "high";
 
@@ -68,26 +69,6 @@ export interface TeamfromDB {
   identifier: string;
 }
 export type Team = Omit<TeamfromDB, "id">;
-
-declare module "next-auth" {
-  interface User {
-    role: UserRole;
-  }
-
-  interface Session {
-    user: {
-      role: UserRole;
-    } & DefaultSession["user"];
-  }
-}
-
-declare module "@auth/core" {
-  /** Returned by the `jwt` callback and `auth`, when using JWT sessions */
-  interface JWT {
-    /** OpenID ID Token */
-    role: UserRole;
-  }
-}
 
 export interface UserCredentials {
   email: string;

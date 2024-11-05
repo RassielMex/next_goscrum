@@ -6,10 +6,19 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   pages: { signIn: "/login" },
   callbacks: {
     jwt: ({ token, user }) => {
-      return { ...token, ...user };
+      if (user) {
+        token.role = user.role;
+        token.teamId = user.teamId;
+      }
+
+      return token;
     },
     session: ({ session, token }) => {
-      return { ...session, ...token };
+      if (token) {
+        session.user.role = token.role;
+        session.user.teamId = token.teamId;
+      }
+      return session;
     },
     authorized({ auth, request: { nextUrl } }) {
       const isLoggedIn = !!auth?.user;
