@@ -13,9 +13,9 @@ export default function TasksFilter() {
     const selectedValue = event.target.value;
 
     if (selectedValue) {
-      params.set("tasks", selectedValue);
+      params.set("owner", selectedValue);
     } else {
-      params.delete("tasks");
+      params.delete("owner");
     }
     replace(`${pathname}?${params.toString()}`);
   };

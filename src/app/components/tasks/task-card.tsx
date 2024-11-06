@@ -1,8 +1,12 @@
 import { FaUser } from "react-icons/fa";
 import clsx from "clsx";
-import { Task, TaskPriority, TaskStatus } from "@/app/models/definitions";
+import {
+  TaskPriority,
+  TaskStatus,
+  TaskWithUser,
+} from "@/app/models/definitions";
 
-export default function TaskCard({ task }: { task: Task }) {
+export default function TaskCard({ task }: { task: TaskWithUser }) {
   //console.log(task);
   return (
     <div className="bg-white p-2 rounded shadow min-w-28">
@@ -10,7 +14,7 @@ export default function TaskCard({ task }: { task: Task }) {
       <hr className="mb-2" />
       <div className="flex gap-x-1">
         <FaUser className="w-4" />
-        <p className="italic">{task.userId}</p>
+        <p className="italic">{task.user.name}</p>
       </div>
       <TextLimiter text={task.description} />
       <StatusBadge status={task.status} />

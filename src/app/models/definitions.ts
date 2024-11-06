@@ -48,6 +48,10 @@ export interface Task {
   description: string;
 }
 
+export interface TaskWithUser extends Omit<Task, "userId"> {
+  user: UserFromDB;
+}
+
 export type UserRole = "leader" | "member";
 
 export interface RegisterUser {
@@ -82,3 +86,15 @@ export interface UserFromDB {
   role: string;
   teamId: number;
 }
+
+export interface FilterList {
+  owner?: TaskOwner;
+  search?: string;
+  priority?: TaskPriority;
+}
+
+export interface TasksFilter extends FilterList {
+  status: TaskStatus;
+}
+
+export type TaskOwner = "all" | "mine";

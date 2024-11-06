@@ -3,6 +3,7 @@ import {
   RegisterMemberUser,
   RegisterUser,
   Task,
+  TaskWithUser,
   Team,
   TeamfromDB,
   UserCredentials,
@@ -117,7 +118,7 @@ export async function getTasks(teamId: string) {
     if (jsonResp.length <= 0) {
       return null;
     }
-    return jsonResp as Task[];
+    return jsonResp as TaskWithUser[];
   } catch (error) {
     console.log(error);
     return null;
