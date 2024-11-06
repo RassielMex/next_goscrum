@@ -1,3 +1,5 @@
+# GoScrum
+
 Proyecto pensando para ser un aplicativo donde equipos puedan llevar el control de sus tareas
 
 ## Instalación
