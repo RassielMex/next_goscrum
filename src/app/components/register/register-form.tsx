@@ -95,6 +95,13 @@ export default function RegisterForm() {
             />
             <label htmlFor="member">Pertenezco a un grupo</label>
           </div>
+          {actionResult?.errors?.role?.map((error, index) => {
+            return (
+              <span key={error + index} className="block text-sm text-red-500">
+                {error}
+              </span>
+            );
+          })}
         </fieldset>
         {showInputId && (
           <>

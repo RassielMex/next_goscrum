@@ -7,10 +7,10 @@ const RegisterSchema = z.object({
 });
 
 export const LeaderRegisterSchema = RegisterSchema.extend({
-  role: z.literal("leader"),
+  role: z.literal("leader", { message: "Debe escoger un role" }),
 });
 
 export const MemberRegisterSchema = RegisterSchema.extend({
-  role: z.literal("member"),
+  role: z.literal("member", { message: "Debe escoger un role" }),
   teamIdentifier: z.string().uuid(),
 });
