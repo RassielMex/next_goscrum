@@ -12,7 +12,7 @@ export async function RegisterAction(
   _prevState: RegisterFormState,
   formData: FormData
 ): Promise<RegisterFormState> {
-  let id;
+  let teamId;
   try {
     const fieldEntries = Object.fromEntries(formData);
     const validatedFields =
@@ -30,13 +30,13 @@ export async function RegisterAction(
     if (!newUser?.id) {
       throw new Error("User not created");
     }
-    id = newUser.id;
+    teamId = newUser.teamId;
   } catch (error) {
     console.error(error);
     return { message: "Algo malo paso de nuestro lado" };
   } finally {
-    if (id) {
-      redirect(`/register/success/${id}`);
+    if (teamId) {
+      redirect(`/register/success/${teamId}`);
     }
   }
 }
