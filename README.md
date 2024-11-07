@@ -22,4 +22,4 @@ AUTH_SECRET=[Pon culquier string]
 
 ## Live
 
-Insert gif or link to demo
+https://next-goscrum.vercel.app
