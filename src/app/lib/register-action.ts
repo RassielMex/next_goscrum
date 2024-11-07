@@ -26,7 +26,7 @@ export async function RegisterAction(
     }
     //console.log("Register");
     const newUser = await registerUser(validatedFields.data);
-    console.log(newUser);
+    //console.log(newUser);
     if (!newUser?.id) {
       throw new Error("User not created");
     }
