@@ -15,7 +15,7 @@ import { v4 as uuidv4 } from "uuid";
 export async function getUserFromDb(credentials: UserCredentials) {
   try {
     const getUserResp = await fetch(
-      "http://localhost:8080/api/users/credentials",
+      `${process.env.API_BASE}/users/credentials`,
       {
         method: "POST",
         body: JSON.stringify(credentials),
@@ -35,7 +35,7 @@ export async function getUserFromDb(credentials: UserCredentials) {
 
 export async function createTask(task: Task) {
   try {
-    const response = await fetch("http://localhost:8080/api/tasks", {
+    const response = await fetch(`${process.env.API_BASE}/tasks`, {
       method: "POST",
       body: JSON.stringify(task),
       headers: { "Content-Type": "application/json" },
@@ -61,7 +61,7 @@ export async function registerUser(
       const identifier = uuidv4();
       const team: Team = { identifier };
       //console.log(team);
-      const createTeamResp = await fetch("http://localhost:8080/api/teams", {
+      const createTeamResp = await fetch(`${process.env.API_BASE}/teams`, {
         method: "POST",
         body: JSON.stringify(team),
         headers: { "Content-Type": "application/json" },
@@ -73,7 +73,7 @@ export async function registerUser(
       const memberUser = user as RegisterMemberUser;
 
       const getTeamResp = await fetch(
-        `http://localhost:8080/api/teams/identifier/${memberUser.teamIdentifier}`,
+        `${process.env.API_BASE}/teams/identifier/${memberUser.teamIdentifier}`,
         {
           method: "GET",
           headers: { "Content-Type": "application/json" },
@@ -91,7 +91,7 @@ export async function registerUser(
       //console.log(userData);
     }
 
-    const resp = await fetch("http://localhost:8080/api/users", {
+    const resp = await fetch(`${process.env.API_BASE}/users`, {
       method: "POST",
       body: JSON.stringify(userData),
       headers: { "Content-Type": "application/json" },
@@ -107,7 +107,7 @@ export async function registerUser(
 export async function getTasks(teamId: string) {
   try {
     const tasksResponse = await fetch(
-      `http://localhost:8080/api/tasks/?teamId=${teamId}`,
+      `${process.env.API_BASE}/tasks/?teamId=${teamId}`,
       {
         method: "GET",
         headers: { "Content-Type": "application/json" },
@@ -128,7 +128,7 @@ export async function getTasks(teamId: string) {
 export async function getUsers(teamId: string) {
   try {
     const usersResponse = await fetch(
-      `http://localhost:8080/api/users/?teamId=${teamId}`,
+      `${process.env.API_BASE}/users/?teamId=${teamId}`,
       {
         method: "GET",
         headers: { "Content-Type": "application/json" },
