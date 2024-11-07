@@ -125,6 +125,11 @@ export default function RegisterForm() {
       >
         Register
       </button>
+      {actionResult?.message && (
+        <span className="text-red-600 text-sm text-center">
+          {actionResult.message}
+        </span>
+      )}
     </form>
   );
 }

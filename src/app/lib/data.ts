@@ -98,9 +98,10 @@ export async function registerUser(
     });
     const jsonResp = await resp.json();
     //console.log("User created from DB:", jsonResp);
-    return jsonResp;
+    return jsonResp as UserFromDB;
   } catch (error) {
     console.log(error);
+    return null;
   }
 }
 
@@ -140,6 +141,24 @@ export async function getUsers(teamId: string) {
       return null;
     }
     return jsonResp as UserFromDB[];
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+}
+
+export async function getTeamIdentifier(id: number) {
+  try {
+    const teamResponse = await fetch(`${process.env.API_BASE}/teams/${id}`, {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    });
+    const team = (await teamResponse.json()) as Team;
+    //console.log(team);
+    if (!team.identifier) {
+      return null;
+    }
+    return team.identifier;
   } catch (error) {
     console.log(error);
     return null;
