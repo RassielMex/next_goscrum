@@ -33,7 +33,7 @@ export default async function Home(props: {
     <div className="">
       <Navbar />
       <div className="container mx-auto md:flex">
-        <TaskCreateForm users={users} />
+        {user?.role === "leader" && <TaskCreateForm users={users} />}
         <section className="w-full mx-2 p-4 flex flex-col gap-y-2 min-w-96">
           <h1 className="text-xl font-semibold mb-4">Tareas</h1>
           <TasksFilter />
