@@ -90,7 +90,7 @@ export async function getTeamByIdentifier(identifier: string) {
       }
     );
     const jsonGetTeamResp = (await getTeamResp.json()) as TeamfromDB;
-    if (jsonGetTeamResp.id) {
+    if (!jsonGetTeamResp.id) {
       throw Error("No se pudo encontrar el team");
     }
     return jsonGetTeamResp;
