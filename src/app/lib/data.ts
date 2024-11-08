@@ -51,6 +51,47 @@ export async function createTask(task: Task) {
   }
 }
 
+export async function createTeam() {
+  try {
+    const identifier = uuidv4();
+    const team: Team = { identifier };
+    //console.log(team);
+    const createTeamResp = await fetch(`${process.env.API_BASE}/teams`, {
+      method: "POST",
+      body: JSON.stringify(team),
+      headers: { "Content-Type": "application/json" },
+    });
+    const jsonCreateTeamResp = (await createTeamResp.json()) as TeamfromDB;
+    if (!jsonCreateTeamResp.id) {
+      return null;
+    }
+    return jsonCreateTeamResp;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+}
+
+export async function getTeamByIdentifier(identifier: string) {
+  try {
+    const getTeamResp = await fetch(
+      `${process.env.API_BASE}/teams/identifier/${identifier}`,
+      {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      }
+    );
+    const jsonGetTeamResp = (await getTeamResp.json()) as TeamfromDB;
+    if (jsonGetTeamResp.id) {
+      throw Error("No se pudo encontrar el team");
+    }
+    return jsonGetTeamResp;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+}
+
 export async function registerUser(
   user: RegisterLeaderUser | RegisterMemberUser
 ) {
@@ -58,35 +99,25 @@ export async function registerUser(
     let userData: RegisterUser;
     if (user.role === "leader") {
       const leaderUser = user as RegisterLeaderUser;
-      const identifier = uuidv4();
-      const team: Team = { identifier };
+      const team = await createTeam();
       //console.log(team);
-      const createTeamResp = await fetch(`${process.env.API_BASE}/teams`, {
-        method: "POST",
-        body: JSON.stringify(team),
-        headers: { "Content-Type": "application/json" },
-      });
-      const jsonCreateTeamResp = (await createTeamResp.json()) as TeamfromDB;
-      //console.log(jsonCreateTeamResp);
-      userData = { ...leaderUser, teamId: jsonCreateTeamResp.id };
+      if (!team) {
+        return null;
+      }
+      userData = { ...leaderUser, teamId: team.id };
     } else {
       const memberUser = user as RegisterMemberUser;
-
-      const getTeamResp = await fetch(
-        `${process.env.API_BASE}/teams/identifier/${memberUser.teamIdentifier}`,
-        {
-          method: "GET",
-          headers: { "Content-Type": "application/json" },
-        }
-      );
-      const jsonGetTeamResp = (await getTeamResp.json()) as TeamfromDB;
+      const team = await getTeamByIdentifier(memberUser.teamIdentifier);
       //console.log(jsonGetTeamResp);
+      if (!team) {
+        return null;
+      }
       userData = {
         name: memberUser.name,
         email: memberUser.email,
         password: memberUser.password,
         role: memberUser.role,
-        teamId: jsonGetTeamResp.id,
+        teamId: team.id,
       };
       //console.log(userData);
     }
