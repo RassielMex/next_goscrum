@@ -53,6 +53,9 @@ export async function createTask(task: Task) {
 
 export async function createTeam() {
   try {
+    const controller = new AbortController();
+    setTimeout(() => controller.abort(), 5000);
+
     const identifier = uuidv4();
     const team: Team = { identifier };
     //console.log(team);
@@ -60,6 +63,7 @@ export async function createTeam() {
       method: "POST",
       body: JSON.stringify(team),
       headers: { "Content-Type": "application/json" },
+      signal: controller.signal,
     });
     const jsonCreateTeamResp = (await createTeamResp.json()) as TeamfromDB;
     if (!jsonCreateTeamResp.id) {
@@ -74,11 +78,15 @@ export async function createTeam() {
 
 export async function getTeamByIdentifier(identifier: string) {
   try {
+    const controller = new AbortController();
+    setTimeout(() => controller.abort(), 5000);
+
     const getTeamResp = await fetch(
       `${process.env.API_BASE}/teams/identifier/${identifier}`,
       {
         method: "GET",
         headers: { "Content-Type": "application/json" },
+        signal: controller.signal,
       }
     );
     const jsonGetTeamResp = (await getTeamResp.json()) as TeamfromDB;
@@ -122,10 +130,14 @@ export async function registerUser(
       //console.log(userData);
     }
 
+    const controller = new AbortController();
+    setTimeout(() => controller.abort(), 5000);
+
     const resp = await fetch(`${process.env.API_BASE}/users`, {
       method: "POST",
       body: JSON.stringify(userData),
       headers: { "Content-Type": "application/json" },
+      signal: controller.signal,
     });
     const jsonResp = await resp.json();
     //console.log("User created from DB:", jsonResp);
