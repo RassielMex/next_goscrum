@@ -133,9 +133,9 @@ export default function RegisterForm() {
         Register
       </button>
       {actionResult?.message && (
-        <span className="text-red-600 text-sm text-center">
+        <p className="text-red-600 text-sm text-center">
           {actionResult.message}
-        </span>
+        </p>
       )}
     </form>
   );
